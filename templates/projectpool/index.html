@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    {% load static %}
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+   
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>Project Pool</title>
+
+
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+*{
+    box-sizing: border-box;
+}
+body{
+    font-family: 'Poppins', sans-serif;
+    box-sizing: border-box;
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+.header{
+    background-color: rgb(232, 255, 255);
+    display: flex;
+    height: 5rem;
+    padding: 1rem;
+    justify-content: space-between;
+    background-color:rgb(227, 245, 245); /* Black*/
+    margin: 0;
+}
+.container{
+    position: fixed;
+    width: 100%;
+    margin: 0;
+    z-index: 1;
+}
+
+.search{
+    font-family: inherit;
+    border: none;
+    font-size: 0.8rem;
+    border-radius: 0.75rem;
+    padding: 0.5rem;
+    margin-right: 0.2rem;
+}
+button{
+    cursor: pointer;
+    border: none;
+    size: 2rem;
+    z-index: 1;
+    background-color: rgb(196, 225, 250);
+    border-radius: 0.5rem;
+    font-family: inherit;
+    padding: 0.5rem;
+}
+button:hover{
+    background-color:rgb(111, 190, 190);
+}
+.cards{
+    position: relative;
+    bottom: -5rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
+.card{
+    cursor: pointer;
+    margin: 2rem;
+    padding-top: 0rem;
+    background-color: aliceblue;
+    box-shadow: 0px 0px 50px 2px rgb(184, 202, 209);
+    width: 25rem;
+    min-height: 40vh;
+    overflow: hidden;
+    border-radius: 0.5rem;
+}
+.card:hover{
+    transform: scale(1.1,1.1);
+    transition: transform 0.1s ease-in;
+}
+.cards h5{
+    margin: 0;
+    padding: 1rem;
+    overflow: scroll;
+    padding-top: 0;
+    -ms-overflow-style: none; 
+  scrollbar-width: none; 
+}
+.cards h5::-webkit-scrollbar{
+    display: none;
+}
+
+.card img{
+    height: 30vh;
+    width: 100%;
+}
+.universityname{
+    display: flex;
+    padding: 1rem;
+    justify-content: space-between;
+    margin: 0;
+}
+.universityname img{
+    height: 8vh;
+    width: auto;
+}
+span{
+    position: relative;
+    font-family: inherit;
+    top: -13rem;
+    font-size: 0.9rem;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    background-color: whitesmoke;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+}
+.tags{
+    display: flex;
+    justify-content: space-evenly;
+    padding: 1rem;
+    padding-top: 0;
+    overflow: scroll;
+    margin-top: none;
+    -ms-overflow-style: none; 
+}
+.tags::-webkit-scrollbar{
+    display: none;
+}
+.tags li{
+    padding: 0.2rem;
+    font-size: 0.8rem;
+    background-color: rgb(218, 218, 218);
+    list-style-type: none;
+    border-radius: 2rem;
+    display: inline;
+}
+.filter{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%; /* 100% Full-height */
+    width: 0; /* 0 width - change this with JavaScript */
+    background-color: transparent;
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Stay on top */
+    top: 0;
+    left: 0;
+}
+.sidebar {
+    height: 80vh; /* 100% Full-height */
+    width: 0; /* 0 width - change this with JavaScript */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Stay on top */
+    border-radius: 10px;
+    padding-left: 0.8rem;
+    margin-top: 2rem;
+    background-color:rgb(227, 245, 245); /* Black*/
+    overflow-x: hidden; /* Disable horizontal scroll */
+    transition: 0.5s; /* 0.5 second transition effect to slide in the sidebar */
+  }
+  
+  /* The sidebar links */
+  .sidebar label {
+    font-size: 1rem;
+    display: inline;
+    transition: 0.3s;
+  }
+  
+  /* Position and style the close button (top right corner) */
+  .sidebar .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+  }
+  .openbtn{
+    font-size: 1rem;
+    cursor: pointer;
+    color: white;
+    position: fixed;
+    margin-left: 1rem;
+    margin-top: 6rem;
+    z-index: 1;
+    padding: 10px 15px;
+    border-radius: 40%;
+    background-color:rgb(111, 190, 190);
+    border: none;
+  }
+  /* The button used to open the sidebar */
+  .openbtn:hover {
+    background-color: rgb(134, 134, 134);
+  }
+  
+  /* Style page content - use this if you want to push the page content to the right when you open the side navigation */
+  #main {
+    transition: margin-left .5s; 
+  }
+  
+  /* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
+  @media screen and (max-height: 450px) {
+    .sidebar {padding-top: 15px;}
+    .sidebar a {font-size: 18px;}
+  }
+
+  /* Popup */
+  .popup{
+      position: fixed;
+      width: 0%;
+      height: 0%;
+      z-index: 100001;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      background-color:rgba(0, 0, 0, 0.795);
+  }
+  .formm{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 10px;
+      box-shadow: 0px 0px 50px 2px rgb(54, 54, 54);
+      padding: 2rem;
+      min-width: 80vh;
+      min-height: 60vh;
+      background-color: azure;
+  }
+  .formm input{
+      margin-bottom: 1rem;
+      border-style: none;
+      border-radius: 5px;
+      font-family: inherit;
+      font-size: 1rem;
+      border-radius: 2px;;
+      padding: 3px
+  }
+  .cross{
+      display: flex;
+      width: 80vh;
+      justify-content: flex-end;
+      align-items: flex-end;
+  }
+  .cross button{
+      color: white;
+      background-color: transparent;
+      font-size: 1rem;
+  }
+    </style>
+  </head>
+  <body>
+    {% load custom_tags %}
+    <div class="popup" id="signupform">      
+    </div> 
+    <div class="popup" id="loginform"></div>
+    <div class="filter" id="filt"> 
+      <div id="mySidebar" class="sidebar">
+        <h3>Categories :</h3>
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+        <ul>
+          <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike">
+          <label for="vehicle1">AI</label><br>
+          <input type="checkbox" id="vehicle2" name="vehicle2" value="Car">
+          <label for="vehicle2">ML</label><br>
+          <input type="checkbox" id="vehicle3" name="vehicle3" value="Boat">
+          <label for="vehicle3">DL</label><br>
+        </ul>
+      </div>
+    </div>
+    <div id="main">
+      <div class="container">
+              <div class="header">
+        <img
+          class="logo"
+          src="https://logopond.com/logos/69ca4b4c5e73128a4aeadf4fc801cae2.png"
+          alt=""
+        />
+        <form>
+          <input
+            type="text"
+            id="search"
+            placeholder="Search University"
+            class="search"
+          />
+
+          {% if request.user.is_authenticated %}
+          <button > <a
+            style="text-decoration: none; color: black" href="{% url 'adminview' %}"> {{ request.user.username }}</a></button>
+          {% else %}
+          <button type="button" onclick="openForm()">Sign up</button>
+          <button type="button" onclick="login()" >Log in</button>
+          {% endif %}
+         
+
+        </form>
+      </div>
+    </div>
+    <button class="openbtn" id="filterbtn" onclick="openNav()"><i class="fa fa-solid fa-filter"></i></button>
+    <div class="cards">
+      {% for project in projects %}
+      <div class="card" onclick="location.href = 'index2.html';"> 
+        <img
+          src="{{project.thumbnail.url}}"
+          alt=""
+        />
+        <span>{{project.title}}</span>
+        <div class="universityname">
+          <img
+            src="{{logos|index:forloop.counter}}"
+            alt="a"
+          />
+          <h4>{{project.user.first_name}}</h4>
+        </div>
+       
+        <h5>
+          <div class="preview">
+          {{project.description|safe}}
+        </div>
+        </h5>
+     
+        <div class="tags">
+          <p>Tags:</p>
+          <ul class="tags-list">
+            <li  > {{project.tags}}</li>
+          </ul>
+        </div>
+      </div>
+      
+      {% endfor %}
+    </div>
+
+    </div> 
+
+    <script>
+      var uploadField = document.getElementById("file");
+    
+    uploadField.onchange = function() {
+        if(this.files[0].size > 2097152){
+           alert("File is too big!");
+           this.value = "";
+        };
+    };
+    </script>
+
+    <script>
+        let previews = document.getElementsByClassName('preview');
+        Array.from(previews).forEach((element) => {
+            element.innerHTML = element.innerText;
+        })
+  
+        // Function to set each single tag effect separed by coma
+        let tags = document.getElementsByClassName("tags-list")
+        for(var i = 0 ; i <tags.length ; i++)
+        {
+          var a  = tags[i].innerText;
+          a = a.split(",")
+          let tags_html_list = "";
+  
+          for(var j = 0 ; j < a.length ; j++)
+          {
+            tags_html_list += '<li>' + a[j] + '</li>'
+          }
+         
+          tags[i].innerHTML = tags_html_list;
+        }
+         
+    </script>
+
+    <script>
+      function openNav() {
+        document.getElementById("filt").style.width = "40vh";
+        document.getElementById("mySidebar").style.width = "30vh";
+        document.getElementById("filterbtn").style.zIndex = "0";   
+      }
+      
+      /* Set the width of the sidebar to 0 and the left margin of the page content to 0 */
+      function closeNav() {
+        document.getElementById("mySidebar").style.width = "0";
+        document.getElementById("filterbtn").style.zIndex = "1";
+        setTimeout(()=>{
+          document.getElementById("filt").style.width = "0";
+        },500)
+        // document.getElementById("main").style.marginLeft = "0";
+      }
+      
+      function formclsbtn() {
+      let formel = document.getElementById("signupform");
+      formel.innerHTML = "";
+      formel.style.width = "0%";
+      formel.style.height = "0%";
+      }
+      
+      function openForm(){
+      let formel = document.getElementById("signupform");
+      formel.style.width = "100%";
+      formel.style.height = "100%";
+      formel.innerHTML=`
+      <div class="cross">
+            <button onclick="formclsbtn()">x</button>
+          </div>
+          <div class="formm">
+            <form action="{% url 'signup' %}" method="POST" enctype="multipart/form-data" >
+              {% csrf_token %}
+            <label>Username :</label><br>
+            <input type="text" id="username" name="username" placeholder="Example : Am_I_Tea?" required><br>
+            <label>University Name :</label><br>
+            <input type="text" id="name" name="name" placeholder="University" required><br>
+            <label>Email :</label><br>
+            <input type="text" id="email" name="email" placeholder="Email address" required><br>
+            <label>Password :</label><br>
+            <input type="password" id="pass" name="password" placeholder="Password" required><br>
+            <label>Confirm :</label><br>
+            <input type="password" id="cpass" name="confirmpassword" placeholder="Password" required><br>
+            <label>Unique Id :</label><br>
+            <input type="text" id="unid" name="unid" 
+            placeholder="Id" required><br>
+            <label>City :</label><br>
+            <input type="text" id="city" name="city" placeholder="State" required><br>
+            <label>State :</label><br>
+            <input type="text" id="state" name="state" placeholder="State" required><br>
+            <label>Country :</label><br>
+            <input type="text" id="country" name="country" placeholder="Country" required><br>
+            <label>Upload Logo (Max 2 Mb ) :</label><br>
+            <input type="file" id="file" name="logo" required><br>
+            <input type="submit" value="Submit">
+          </form>
+          </div>
+      `;
+
+        }
+
+      function lformclsbtn(){
+      let formel = document.getElementById("loginform");
+      formel.innerHTML = "";
+      formel.style.width = "0%";
+      formel.style.height = "0%";
+      }
+      
+      function login(){
+        console.log("Hi")
+      let formel = document.getElementById("loginform");
+      formel.style.width = "100%";
+      formel.style.height = "100%";
+      formel.innerHTML = `
+      <div class="cross">
+            <button onclick="lformclsbtn()">x</button>
+          </div>
+          <div class="formm">
+            <form method="POST" action="{% url 'login' %}" >
+              {% csrf_token %}
+            <label>Username :</label><br>
+            <input type="text" id="username" name="username" placeholder="Example : Am_I_Tea?" required><br>
+            <label>Password :</label><br>
+            <input type="text" id="password" name="password" placeholder="Password" required><br>
+            <input type="submit" value="LogIn">
+          </form>
+          </div>
+      `
+      };
+
+    
+       
+    
+   
+    </script>
+  </body>
+</html>
