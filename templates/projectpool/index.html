@@ -275,11 +275,13 @@ span{
     <div id="main">
       <div class="container">
               <div class="header">
+                {% load static %}
         <img
           class="logo"
-          src="https://logopond.com/logos/69ca4b4c5e73128a4aeadf4fc801cae2.png"
+          src="{% static 'logo.jpeg' %}"
           alt=""
         />
+        <h2 style="text-align: left; font-family: Verdana; color: #6b5c3f; margin-top:10px">   PROJECT HUB </h2>
         <form>
           <input
             type="text"
@@ -301,9 +303,11 @@ span{
       </div>
     </div>
     <button class="openbtn" id="filterbtn" onclick="openNav()"><i class="fa fa-solid fa-filter"></i></button>
+    <a>
     <div class="cards">
       {% for project in projects %}
-      <div class="card" onclick="location.href = 'index2.html';"> 
+      <a style="text-decoration: none; color: black" href="{% url 'project' project.sno %}">
+      <div class="card" onclick="location.href = 'index.html';"> 
         <img
           src="{{project.thumbnail.url}}"
           alt=""
@@ -330,7 +334,7 @@ span{
           </ul>
         </div>
       </div>
-      
+    </a>
       {% endfor %}
     </div>
 
@@ -456,7 +460,7 @@ span{
             <label>Username :</label><br>
             <input type="text" id="username" name="username" placeholder="Example : Am_I_Tea?" required><br>
             <label>Password :</label><br>
-            <input type="text" id="password" name="password" placeholder="Password" required><br>
+            <input type="password" id="password" name="password" placeholder="Password" required><br>
             <input type="submit" value="LogIn">
           </form>
           </div>

@@ -31,7 +31,8 @@ urlpatterns = [
     path("admin-view" , views.admin_view, name = "adminview"),
     path("logout",views.logoutuser,name="logout"),
     path("validate-otp/<str:uid>/",views.validate_otp,name="otp"),
-    path("student", include("students.urls"))
+    path("student", include("students.urls")),
+    path("project/<str:sno>",views.project,name="project")
    
   
 

@@ -3,6 +3,7 @@
 from ctypes import Union
 from curses.ascii import HT
 import random
+from tkinter.messagebox import RETRY
 from unicodedata import name
 from wsgiref.util import request_uri
 from xml.dom import HierarchyRequestErr
@@ -14,6 +15,17 @@ from institutes.models import Projects,Institue
 from email.message import EmailMessage
 import smtplib
 from django.contrib import messages
+
+def project(request,sno):
+    try:
+        project = Projects.objects.get(sno=sno)
+       
+
+    except Exception as e:
+        return HttpResponse("Page not Found")
+
+    return render(request,"projectpool/blog.html", {'project': project})
+
 
 def validate_otp(request ,uid ):
     
@@ -29,6 +41,18 @@ def validate_otp(request ,uid ):
         if(otp == ins.otp):
             ins.otpverified = True
             ins.save()
+
+            # Sending the email
+            a = "<h2> Hey "  + ins.name + "<br>  <p> The details of your institue has been successfully submitted to us. Our team will verify your details and once it's done we will notify you and your account will be activated. <br> Regards,<br> Team ProjectHub </p>"
+   
+            msg = EmailMessage()
+            msg['Subject'] = 'Welcome to the Project Hub'
+            msg['From'] = 'a.m2001nov@gmail.com' 
+            msg['To'] = ins.user.email
+            msg.set_content(a, subtype='html')
+            with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp:
+                smtp.login('a.m2001nov@gmail.com', 'jnksljbwejcklqwc') 
+                smtp.send_message(msg)
             return render(request,"projectpool/success.html")
         
         # If opt is Wrong Try Again
